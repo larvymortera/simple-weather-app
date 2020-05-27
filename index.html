@@ -37,6 +37,8 @@
                     if (Object.keys(data).length) {
                       // Log location.
                       console.log(data.name);
+                      // Log current date and time.
+                      console.log(getCurrentDateTime(data.timezone));
                       // Log weather data.
                       console.log(`${data.temp} degree celsius, ${data.weather.description}`);
                       // Log empty line.
