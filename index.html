@@ -10,5 +10,47 @@
       <input type="submit" name="submit">
     </form>
     <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript">
+      (function() {
+        // Form submit event.
+        document.getElementById('form').addEventListener("submit", function(e) {
+          e.preventDefault();
+          
+          // Get input text.
+          const text = document.getElementById('location').value;
+
+          // Check if value is not empty.
+          if (text.length) {
+            // Get locations and remove duplicate values.
+            let locations = [...new Set(text.trim().toLowerCase().split(','))];
+
+            // Remove empty and single character items.
+            locations = locations.filter((text) => text.trim().length > 1);
+
+            // Get weather data per location and log the result.
+            if (locations.length) {
+              locations.map((location) => {
+                // Request data.
+                fetchWeatherData(location)
+                  .then((data) => {
+                    // Check if data is not empty.
+                    if (Object.keys(data).length) {
+                      // Log location.
+                      console.log(data.name);
+                      // Log weather data.
+                      console.log(`${data.temp} degree celsius, ${data.weather.description}`);
+                      // Log empty line.
+                      console.log("\n");
+                    }
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+              });
+            }
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
