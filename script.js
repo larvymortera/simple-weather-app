@@ -4,7 +4,13 @@ const apiUrl = 'https://api.openweathermap.org/data/2.5/weather';
 
 // Fetch weather data from openweathermap.org.
 const fetchWeatherData = (location) => {
-  return fetch(`${apiUrl}?q=${location}&appId=${appId}&units=metric`)
+  // Remove extra spaces.
+  location = location.trim();
+  // Supports search by city or zip code.
+  let searchType = (Number.parseInt(location) == location) ? 'zip' : 'q';
+
+  // Fetch data from api.
+  return fetch(`${apiUrl}?${searchType}=${location}&appId=${appId}&units=metric`)
     .then((response) => {
       return response.json();
     })
