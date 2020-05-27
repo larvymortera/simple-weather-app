@@ -9,12 +9,17 @@
       <input type="text" name="location" id="location" />
       <input type="submit" name="submit">
     </form>
+    <div id="results"></div>
     <script type="text/javascript" src="script.js"></script>
     <script type="text/javascript">
       (function() {
         // Form submit event.
         document.getElementById('form').addEventListener("submit", function(e) {
           e.preventDefault();
+
+          // Clear results container.
+          const results = document.getElementById('results');
+          results.innerHTML = "";
           
           // Get input text.
           const text = document.getElementById('location').value;
@@ -38,11 +43,15 @@
                       // Log location.
                       console.log(data.name);
                       // Log current date and time.
-                      console.log(getCurrentDateTime(data.timezone));
+                      const date = getCurrentDateTime(data.timezone);
+                      console.log(date);
                       // Log weather data.
-                      console.log(`${data.temp} degree celsius, ${data.weather.description}`);
+                      const weather = `${data.temp} degree celsius, ${data.weather.description}`;
+                      console.log(weather);
                       // Log empty line.
                       console.log("\n");
+                      // Append to results container.
+                      results.innerHTML += `<p>${data.name}<br/>${date}</br>${weather}</p>`;
                     }
                   })
                   .catch((error) => {
