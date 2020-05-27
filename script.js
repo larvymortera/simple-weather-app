@@ -9,6 +9,11 @@ const fetchWeatherData = (location) => {
       return response.json();
     })
     .then((data) => {
+      // No data found.
+      if (data.cod === "404") {
+        return {};
+      }
+
       return {
         name: data.name,
         temp: data.main.temp,
